@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Dtos;
 using Services.Interfaces;
+using WebApi.HeopesrSructures;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,10 +32,17 @@ namespace WebApi.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
-        public OrderDto Post([FromForm] OrderDto newP)
+        public IActionResult Post([FromBody] Order_OrderProduct req)
         {
-            OrderDto o = _orderService.AddItem(newP);
-            return o;
+            OrderDto newO = req.Order;
+            List<OrderProductDto> orderProducts = req.OrderProducts;
+            
+            OrderDto o = _orderService.AddOrder(newO, orderProducts);
+            if (o != null)
+            {
+                return Ok(o);
+            }
+            return BadRequest("order must have products");
         }
 
     }

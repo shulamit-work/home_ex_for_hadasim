@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repositories.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace Services.Dtos
         public int Id { get; set; }
         public int ProviderId { get; set; }
         public OrderStatus? Status { get; set; } = OrderStatus.NEW;
+
+        public ICollection<OrderProductDto> OrderProducts { get; set; }
     }
 }
 

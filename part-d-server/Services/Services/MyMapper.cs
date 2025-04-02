@@ -13,7 +13,7 @@ namespace Services.Services
     {
         public MyMapper()
         {
-            CreateMap<Order, OrderProductDto>().ReverseMap();
+            CreateMap<Order, OrderDto>().ReverseMap();
             CreateMap<OrderProduct, OrderProductDto>().ReverseMap();
             CreateMap<Owner, OwnerDto>().ReverseMap();
             CreateMap<Product, ProductDto>().ReverseMap();

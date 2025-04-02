@@ -33,34 +33,34 @@ namespace Services.Services
             return _mapper.Map<ProviderDto>(_repository.AddItem(_mapper.Map<Provider>(item)));
         }
 
-        public ProviderDto AddProvider(ProviderDto provider, List<ProductDto> products)
-        {
-            string pwd = provider.Password;
+        //public ProviderDto AddProvider(ProviderDto provider, List<ProductDto> products)
+        //{
+        //    string pwd = provider.Password;
 
-            if (!CheckIfValidatePwd(pwd))
-                throw new ArgumentException("Password must contain upper and lower case letters, numbers, and special characters.");
+        //    if (!CheckIfValidatePwd(pwd))
+        //        throw new ArgumentException("Password must contain upper and lower case letters, numbers, and special characters.");
 
-            // hashing
-            string hashPwd = PasswordManagerService.HashPassword(pwd);
-            provider.Password = hashPwd;
+        //    // hashing
+        //    string hashPwd = PasswordManagerService.HashPassword(pwd);
+        //    provider.Password = hashPwd;
 
-            // add product 
-            if (products.Count == 0)
-            {
-                return null;
-            }
+        //    // add product 
+        //    if (products.Count == 0)
+        //    {
+        //        return null;
+        //    }
 
-            // add the provider
-            ProviderDto newProvider = AddItem(provider);
-            //add his products
-            List<ProductDto> productsList = products;// JsonConvert.DeserializeObject<List<ProductDto>>(products);
-            foreach (ProductDto p in productsList)
-            {
-                p.ProviderId = newProvider.Id;
-                _prodRepo.AddItem(_mapper.Map<Product>(p));
-            }            
-            return newProvider;
-        }
+        //    // add the provider
+        //    ProviderDto newProvider = AddItem(provider);
+        //    //add his products
+        //    List<ProductDto> productsList = products;// JsonConvert.DeserializeObject<List<ProductDto>>(products);
+        //    foreach (ProductDto p in productsList)
+        //    {
+        //        p.ProviderId = newProvider.Id;
+        //        _prodRepo.AddItem(_mapper.Map<Product>(p));
+        //    }            
+        //    return newProvider;
+        //}
         private bool CheckIfValidatePwd(string pwd)
         {
             if (pwd.Length < 8 || pwd.Length > 20)

@@ -26,7 +26,9 @@ namespace Services.Services
 
         public OrderDto AddItem(OrderDto item)
         {
-            return _mapper.Map<OrderDto>(_repository.AddItem(_mapper.Map<Order>(item)));
+
+            OrderDto newO= _mapper.Map<OrderDto>(_repository.AddItem(_mapper.Map<Order>(item)));
+
         }
 
         public OrderDto Get(int id)

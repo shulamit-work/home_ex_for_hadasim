@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Dtos;
 using Services.Interfaces;
-using WebApi.HeopesrSructures;
+//using WebApi.HeopesrSructures;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -32,13 +32,13 @@ namespace WebApi.Controllers
 
         // POST api/<ProviderController>
         [HttpPost]
-        public IActionResult Post([FromBody] Provider_Products req)
+        public IActionResult Post([FromBody] ProviderDto req)
         {
-            ProviderDto newP = req.Provider;
-            List<ProductDto> products = req.Products;
+            //ProviderDto newP = req.Provider;
+            //List<ProductDto> products = req.Products;
             try
             {
-                ProviderDto p = _providerService.AddProvider(newP, products);//, products);
+                ProviderDto p = _providerService.AddItem(req);//newP, products);//, products);
                 if (p != null)
                 {
                     return Ok(p);

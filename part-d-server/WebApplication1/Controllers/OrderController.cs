@@ -1,49 +1,49 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Services.Dtos;
-using Services.Interfaces;
-using WebApi.HeopesrSructures;
+﻿//using Microsoft.AspNetCore.Mvc;
+//using Services.Dtos;
+//using Services.Interfaces;
+//using WebApi.HeopesrSructures;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+//// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace WebApi.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class OrderController : ControllerBase
-    {
-        private readonly IService<OrderDto> _orderService;
-        public OrderController(IService<OrderDto> service)
-        {
-            _orderService = service;
-        }
-        // GET: api/<OrderController>
-        [HttpGet]
-        public List<OrderDto> Get()
-        {
-            return _orderService.GetAll();
-        }
+//namespace WebApi.Controllers
+//{
+//    [Route("api/[controller]")]
+//    [ApiController]
+//    public class OrderController : ControllerBase
+//    {
+//        private readonly IService<OrderDto> _orderService;
+//        public OrderController(IService<OrderDto> service)
+//        {
+//            _orderService = service;
+//        }
+//        // GET: api/<OrderController>
+//        [HttpGet]
+//        public List<OrderDto> Get()
+//        {
+//            return _orderService.GetAll();
+//        }
 
-        // GET api/<OrderController>/5
-        [HttpGet("{id}")]
-        public OrderDto Get(int id)
-        {
-            return _orderService.Get(id);
-        }
+//        // GET api/<OrderController>/5
+//        [HttpGet("{id}")]
+//        public OrderDto Get(int id)
+//        {
+//            return _orderService.Get(id);
+//        }
 
-        // POST api/<OrderController>
-        [HttpPost]
-        public IActionResult Post([FromBody] Order_OrderProduct req)
-        {
-            OrderDto newO = req.Order;
-            List<OrderProductDto> orderProducts = req.OrderProducts;
+//        // POST api/<OrderController>
+//        [HttpPost]
+//        public IActionResult Post([FromBody] Order_OrderProduct req)
+//        {
+//            OrderDto newO = req.Order;
+//            List<OrderProductDto> orderProducts = req.OrderProducts;
             
-            OrderDto o = _orderService.AddOrder(newO, orderProducts);
-            if (o != null)
-            {
-                return Ok(o);
-            }
-            return BadRequest("order must have products");
-        }
+//            OrderDto o = _orderService.AddOrder(newO, orderProducts);
+//            if (o != null)
+//            {
+//                return Ok(o);
+//            }
+//            return BadRequest("order must have products");
+//        }
 
-    }
-}
+//    }
+//}

@@ -16,9 +16,9 @@ namespace Services.Services
             services.AddRepository();
 
             services.AddScoped<IService<OrderDto>, OrderService>();
-            services.AddScoped<IService<OrderProductDto>, OrderProductService>();
+            //services.AddScoped<IService<OrderProductDto>, OrderProductService>();
             services.AddScoped<IService<OwnerDto>, OwnerService>();
-            services.AddScoped<IService<ProductDto>, ProductService>();
+            //services.AddScoped<IService<ProductDto>, ProductService>();
             services.AddScoped<IService<ProviderDto>, ProviderService>();
             services.AddScoped<IProviderSerivce, ProviderService>();
             

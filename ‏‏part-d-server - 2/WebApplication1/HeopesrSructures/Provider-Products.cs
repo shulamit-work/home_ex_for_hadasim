@@ -5,9 +5,9 @@ namespace WebApi.HeopesrSructures
 {
     public class Provider_Products
     {
-        public ProviderDto Provider { get; set; }
+        public UserDto Provider { get; set; }
         public List<ProductDto> Products { get; set; }
-        public Provider_Products(List<ProductDto> products, ProviderDto provider)
+        public Provider_Products(List<ProductDto> products, UserDto provider)
         {
             Products = products;
             Provider= provider;

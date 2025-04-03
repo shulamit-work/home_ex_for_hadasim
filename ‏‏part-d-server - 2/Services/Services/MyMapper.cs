@@ -15,10 +15,12 @@ namespace Services.Services
         {
             CreateMap<Order, OrderDto>().ReverseMap();
             CreateMap<OrderProduct, OrderProductDto>().ReverseMap();
-            CreateMap<Owner, OwnerDto>().ReverseMap();
+            //CreateMap<Owner, OwnerDto>().ReverseMap();
             CreateMap<Product, ProductDto>().ReverseMap();
-            CreateMap<Provider, ProviderDto>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
             CreateMap<MessageToProvider, MessageToProviderDto>().ReverseMap();
+
+
            
         }
     }

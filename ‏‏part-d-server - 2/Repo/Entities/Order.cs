@@ -16,9 +16,9 @@ namespace Repositories.Entities
     public class Order
     {
         public int Id { get; set; }
-        public int ProviderId { get; set; }
-        [ForeignKey("ProviderId")]
-        public virtual Provider? Prov { get; set; }
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual User? Prov { get; set; }
 
         public OrderStatus? Status { get; set; } = OrderStatus.NEW;
     }

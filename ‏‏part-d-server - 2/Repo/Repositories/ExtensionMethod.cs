@@ -18,10 +18,10 @@ namespace Repositories.Repositories
             services.AddScoped<IOrderRepo, OrderRepo>();
             services.AddScoped<IRepository<OrderProduct>, OrderProductRepo>();
             services.AddScoped<IOrderProductRepo, OrderProductRepo>();
-            services.AddScoped<IRepository<Owner>, OwnerRepo>();
+            //services.AddScoped<IRepository<Owner>, OwnerRepo>();
             services.AddScoped<IRepository<Product>, ProductRepo>();
             services.AddScoped<IProductRepo, ProductRepo>();
-            services.AddScoped<IRepository<Provider>, ProviderRepo>();
+            services.AddScoped<IRepository<User>, UserRepo>();
             services.AddScoped<IRepository<MessageToProvider>, MessageToProviderRepo>();
             services.AddScoped<IMessageToProviderRepo, MessageToProviderRepo>();
             

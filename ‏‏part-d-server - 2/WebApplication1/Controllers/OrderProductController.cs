@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Dtos;
 using Services.Interfaces;
 
@@ -15,8 +16,9 @@ namespace WebApi.Controllers
         {
             _orderProductService= orderProductService;
         }
-        
+
         // GET api/<OrderController>/5
+        [Authorize]
         [HttpGet("getOrderProducts/{orderId}")]
         public ActionResult<List<OrderProductDto>> GetOrderProductsByOrderId(int orderId)
         {

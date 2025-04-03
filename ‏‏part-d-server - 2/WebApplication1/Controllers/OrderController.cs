@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Dtos;
 using Services.Interfaces;
 using WebApi.HeopesrSructures;
@@ -17,6 +18,7 @@ namespace WebApi.Controllers
             _orderService = service;
         }
         // GET: api/<OrderController>
+        [Authorize(Roles = "owner")]
         [HttpGet]
         public List<OrderDto> Get()
         {
@@ -24,12 +26,15 @@ namespace WebApi.Controllers
         }
 
         // GET api/<OrderController>/5
+        [Authorize(Roles = "owner")]
         [HttpGet("{id}")]
         public OrderDto Get(int id)
         {
             return _orderService.Get(id);
         }
 
+
+        [Authorize]
         [HttpGet("getOrdersByProvderId/{id}")]
         public List<OrderDto> getOrdersByProvderId(int id)
         {
@@ -37,6 +42,7 @@ namespace WebApi.Controllers
         }
 
         // POST api/<OrderController>
+        [Authorize(Roles = "owner")]
         [HttpPost]
         public IActionResult Post([FromBody] Order_OrderProduct req)
         {
@@ -51,6 +57,7 @@ namespace WebApi.Controllers
             return BadRequest("order must have products");
         }
 
+        [Authorize]
         [HttpPut("changeStatus")]
         public OrderDto ChangeStatus(int id, bool isOwner)
         {

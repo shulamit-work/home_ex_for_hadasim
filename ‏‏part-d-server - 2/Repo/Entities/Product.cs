@@ -13,8 +13,8 @@ namespace Repositories.Entities
         public string Name { get; set; }
         public double PricePer1 { get; set; }
         public int MinCount { get; set; }
-        public int ProviderId { get; set; }
-        [ForeignKey("ProviderId")]
-        public virtual Provider? Prov { get; set; }
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual User? User { get; set; }
     }
 }

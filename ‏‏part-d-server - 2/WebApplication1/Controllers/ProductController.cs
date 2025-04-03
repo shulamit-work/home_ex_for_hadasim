@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Dtos;
 using Services.Interfaces;
 using Services.Services;
@@ -17,6 +18,7 @@ namespace WebApi.Controllers
             _productService = service;
         }
         // GET: api/<ProductController>
+        [Authorize(Roles = "owner")]
         [HttpGet]
         public List<ProductDto> Get()
         {
@@ -24,12 +26,14 @@ namespace WebApi.Controllers
         }
 
         // GET api/<ProductController>/5
+        [Authorize]
         [HttpGet("{id}")]
         public ProductDto Get(int id)
         {
             return _productService.Get(id);
         }
 
+        [Authorize]
         [HttpGet("getProductsOfProvider/{provId}")]
         public ActionResult<List<OrderProductDto>> GetOrderProductsByOrderId(int provId)
         {

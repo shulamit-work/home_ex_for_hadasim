@@ -28,12 +28,12 @@ namespace Repositories.Interfaces
     public interface IOrderRepo: IRepository<Order>
     {
         Order ConfirmOrder(int id, OrderStatus status);
-        List<Order> GetOrdersByProvderId(int providerId);
+        List<Order> GetOrdersByProvderId(int UserId);
     }
 
     public interface IMessageToProviderRepo : IRepository<MessageToProvider>
     {
-        List<MessageToProvider> GetByProviderId(int providerId);
+        List<MessageToProvider> GetByProviderId(int UserId);
     }
 
 } 

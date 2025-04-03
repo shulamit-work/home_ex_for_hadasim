@@ -7,9 +7,8 @@ namespace Repositories.Interfaces
     public interface IContext
     {
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Owner> Owner { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
-        public DbSet<Provider> Providers { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<MessageToProvider> MessageToProviders { get; set; }
 

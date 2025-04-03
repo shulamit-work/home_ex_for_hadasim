@@ -1,8 +1,10 @@
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Mock;
 using Repositories.Interfaces;
 using Repositories.Repositories;
 using Services.Services;
+using System.Text;
 
 namespace WebApplication1
 {
@@ -25,6 +27,33 @@ namespace WebApplication1
             builder.Services.AddServiceExtension();
             builder.Services.AddRepository();
             builder.Services.AddDbContext<IContext, DB>();
+
+            //token
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateAudience = true,
+                        ValidateIssuer = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                    };
+
+                    // how it r
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var path = context.HttpContext.Request.Path;
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
+
+
 
             // CORS policy
             var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -52,6 +81,7 @@ namespace WebApplication1
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.UseAuthentication();
             app.UseCors(MyAllowSpecificOrigins);
 
 

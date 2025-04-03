@@ -16,7 +16,7 @@ namespace Services.Dtos
     public class OrderDto
     {
         public int Id { get; set; }
-        public int ProviderId { get; set; }
+        public int UserId { get; set; }
         public OrderStatus? Status { get; set; } = OrderStatus.NEW;
     }
 }

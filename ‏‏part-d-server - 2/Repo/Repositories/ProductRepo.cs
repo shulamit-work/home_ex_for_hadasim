@@ -35,7 +35,7 @@ namespace Repositories.Repositories
 
         public List<Product> GetByProviderId(int id)
         {
-            return GetAll().Where(p => p.ProviderId == id).ToList();
+            return GetAll().Where(p => p.UserId == id).ToList();
         }
     }
 }

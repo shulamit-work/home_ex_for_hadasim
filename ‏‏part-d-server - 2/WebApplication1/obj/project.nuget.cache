@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ixOqk8egctAXzdiK7GuPXQZYnf+ig4POISLJTa4muXH3dPLFKmH7T5p+kGTf3Rprjezf/phH8Xz797OSC8MO7Q==",
+  "dgSpecHash": "iWQWTFtaArxd9iNP9lZVcvPefCaX5hDqBjhTnexL1CJc++qfo3y3IkuJlqmxwylXfXH2HQHfoqXedypXJglEbw==",
   "success": true,
   "projectFilePath": "C:\\Users\\User\\Dropbox\\שולמית\\מבחן כניסה הדסים\\home_ex_for_hadasim\\‏‏part-d-server - 2\\WebApplication1\\WebApi.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\User\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\6.1.1\\automapper.extensions.microsoft.dependencyinjection.6.1.1.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.36\\microsoft.aspnetcore.authentication.jwtbearer.6.0.36.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.2\\microsoft.aspnetcore.openapi.7.0.2.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.7\\microsoft.data.sqlclient.2.1.7.nupkg.sha512",

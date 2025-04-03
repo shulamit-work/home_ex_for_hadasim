@@ -65,8 +65,9 @@ namespace Services.Services
             if (isOwner && (OrderStatus)o.Status == OrderStatus.PROCESSING)
             {
                 ret = _mapper.Map<OrderDto>(_repository.ConfirmOrder(id, OrderStatus.DONE));
+                MessageToProviderDto msg = new MessageToProviderDto(o.UserId, $"order number {o.Id} has confirmed right now");
                 _messageToProviderService.AddItem(
-                        new MessageToProviderDto(o.ProviderId, $"order number {o.Id} has confirmed right now")
+                        msg
                     );
             }
             else if (!isOwner && (OrderStatus)o.Status == OrderStatus.NEW)

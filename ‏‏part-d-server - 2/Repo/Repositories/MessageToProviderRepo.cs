@@ -25,8 +25,7 @@ namespace Repositories.Repositories
 
         public MessageToProvider Get(int id)
         {
-            //return GetAll().FirstOrDefault(m=>m.Id == id);
-            throw new Exception();
+            return GetAll().FirstOrDefault(m=>m.Id == id);
         }
 
         public List<MessageToProvider> GetAll()
@@ -34,9 +33,9 @@ namespace Repositories.Repositories
             return context.MessageToProviders.ToList();
         }
 
-        public List<MessageToProvider> GetByProviderId(int providerId)
+        public List<MessageToProvider> GetByProviderId(int UserId)
         {
-            return GetAll().Where(m => m.ProviderId == providerId).ToList();
+            return GetAll().Where(m => m.UserId == UserId).ToList();
         }
     }
 }

@@ -44,9 +44,9 @@ namespace Repositories.Repositories
             return context.Orders.ToList();
         }
 
-        public List<Order> GetOrdersByProvderId(int providerId)
+        public List<Order> GetOrdersByProvderId(int UserId)
         {
-            return GetAll().Where(o => o.ProviderId == providerId).ToList();    
+            return GetAll().Where(o => o.UserId == UserId).ToList();    
         }
     }
 }

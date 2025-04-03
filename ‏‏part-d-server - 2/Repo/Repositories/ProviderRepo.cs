@@ -8,29 +8,29 @@ using System.Threading.Tasks;
 
 namespace Repositories.Repositories
 {
-    public class ProviderRepo : IRepository<Provider>
+    public class UserRepo : IRepository<User>
     {
         private readonly IContext context;
-        public ProviderRepo(IContext context)
+        public UserRepo(IContext context)
         {
             this.context = context;
         }
 
-        public Provider AddItem(Provider item)
+        public User AddItem(User item)
         {
-            context.Providers.Add(item);
+            context.Users.Add(item);
             context.Save();
             return Get(item.Id);
         }
 
-        public Provider Get(int id)
+        public User Get(int id)
         {
-            return context.Providers.FirstOrDefault(p => p.Id == id);
+            return context.Users.FirstOrDefault(p => p.Id == id);
         }
 
-        public List<Provider> GetAll()
+        public List<User> GetAll()
         {
-            return context.Providers.ToList();
+            return context.Users.ToList();
         }
 
     }

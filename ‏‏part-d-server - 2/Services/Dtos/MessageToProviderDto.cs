@@ -10,14 +10,14 @@ namespace Services.Dtos
     public class MessageToProviderDto
     {
 
-        public MessageToProviderDto(int providerId, string text)
+        public MessageToProviderDto(int userId, string text)
         {
-            ProviderId = providerId;
+            UserId = userId;
             Text= text;
         }
 
         public int Id { get; set; }
-        public int ProviderId { get; set; }
+        public int UserId { get; set; }
         public string Text { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using Services.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,6 +17,7 @@ namespace WebApi.Controllers
             _serivce = serivce;
         }
 
+        [Authorize]///*(Roles = "provider")*/]
         [HttpGet("getByProviderId/{id}")]
         public List<MessageToProviderDto> Get(int id)
         {

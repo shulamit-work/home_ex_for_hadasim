@@ -18,9 +18,9 @@ namespace Services.Interfaces
 
     }
 
-    public interface IProviderSerivce : IService<ProviderDto>
+    public interface IProviderSerivce : IService<UserDto>
     {
-        ProviderDto AddProvider(ProviderDto provider, List<ProductDto> products);
+        UserDto AddProvider(UserDto provider, List<ProductDto> products);
 
     }
     public interface IOrderSerivce : IService<OrderDto>

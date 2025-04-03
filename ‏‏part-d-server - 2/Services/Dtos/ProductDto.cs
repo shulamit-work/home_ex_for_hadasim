@@ -13,6 +13,6 @@ namespace Services.Dtos
         public string Name { get; set; }
         public double PricePer1 { get; set; }
         public int MinCount { get; set; }
-        public int ProviderId { get; set; }
+        public int UserId { get; set; }
     }
 }

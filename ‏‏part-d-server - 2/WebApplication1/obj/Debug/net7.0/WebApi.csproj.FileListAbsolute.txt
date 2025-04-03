@@ -235,3 +235,4 @@ C:\Users\User\Dropbox\שולמית\מבחן כניסה הדסים\home_ex_for_ha
 C:\Users\User\Dropbox\שולמית\מבחן כניסה הדסים\home_ex_for_hadasim\‏‏part-d-server - 2\WebApplication1\obj\Debug\net7.0\WebApi.pdb
 C:\Users\User\Dropbox\שולמית\מבחן כניסה הדסים\home_ex_for_hadasim\‏‏part-d-server - 2\WebApplication1\obj\Debug\net7.0\WebApi.genruntimeconfig.cache
 C:\Users\User\Dropbox\שולמית\מבחן כניסה הדסים\home_ex_for_hadasim\‏‏part-d-server - 2\WebApplication1\obj\Debug\net7.0\ref\WebApi.dll
+C:\Users\User\Dropbox\שולמית\מבחן כניסה הדסים\home_ex_for_hadasim\‏‏part-d-server - 2\WebApplication1\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

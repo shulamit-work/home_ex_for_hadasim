@@ -19,14 +19,14 @@ namespace Services.Services
             services.AddScoped<IOrderSerivce, OrderService>();
             services.AddScoped<IService<OrderProductDto>, OrderProductService>();
             services.AddScoped<IOrderProductsService, OrderProductService>();
-            services.AddScoped<IService<OwnerDto>, OwnerService>();
             services.AddScoped<IService<MessageToProviderDto>, MessageToProviderService>();
             services.AddScoped<IMessageToProviderService, MessageToProviderService>();
             services.AddScoped<IService<ProductDto>, ProductService>();
             services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IService<ProviderDto>, ProviderService>();
-            services.AddScoped<IProviderSerivce, ProviderService>();
-            
+            services.AddScoped<IService<UserDto>, UserService>();
+            services.AddScoped<IProviderSerivce, UserService>();
+            services.AddScoped<ILoginService, LoginService>();
+
 
             services.AddAutoMapper(typeof(MyMapper));
 

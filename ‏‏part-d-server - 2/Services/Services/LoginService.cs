@@ -10,16 +10,17 @@ namespace Services.Services
 {
     public class LoginService : ILoginService
     {
-        private readonly IService<UserDto> _userService;
+        private readonly IService<ProviderDto> _provService;
+        private readonly IService<OwnerDto> _ownerService;
         private readonly IConfiguration _config;
 
-        public LoginService(IService<UserDto> userService, IConfiguration config)
+        public LoginService(IService<ProviderDto> provService, IService<OwnerDto> ownerService, IConfiguration config)
         {
-            _userService = userService;
+            _provService = provService;
+            _ownerService = ownerService;
             _config = config;
         }
-
-        public string GenerateToken(UserDto user)
+        public string GenerateTokenP(ProviderDto prov)
         {
             //the code to encode in a bytes array
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -27,10 +28,9 @@ namespace Services.Services
             var carditional = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.IsAdmin == true ? "admin" : "user") // הוספת תביעה לתפקיד
+                new Claim(ClaimTypes.Name, prov.Name),
+                new Claim(ClaimTypes.NameIdentifier, prov.Name.ToString()),
+                new Claim(ClaimTypes.Role, "prov")
             };
             var token = new JwtSecurityToken(
                 _config["Jwt:Issuer"], _config["Jwt:Audience"],
@@ -41,22 +41,48 @@ namespace Services.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public UserDto Verify(string name, string pwd)
+        public string GenerateTokenO(OwnerDto owner)
         {
-            return _userService.GetAll().FirstOrDefault(u => u.UserName == name && BCrypt.Net.BCrypt.Verify(pwd, u.HashPwd));
+            //the code to encode in a bytes array
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            //encoding
+            var carditional = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Name, owner.Name),
+                new Claim(ClaimTypes.NameIdentifier, owner.Name.ToString()),
+                new Claim(ClaimTypes.Role, "owner")
+            };
+            var token = new JwtSecurityToken(
+                _config["Jwt:Issuer"], _config["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddHours(1),
+                signingCredentials: carditional
+            );
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public bool ValidateUserId(ClaimsPrincipal user, int userId)
+        public ProviderDto VerifyP(string name, string pwd)
+        {
+            return _provService.GetAll().FirstOrDefault(p => p.Name == name && BCrypt.Net.BCrypt.Verify(pwd, p.Password));
+        }
+
+        public OwnerDto VerifyO(string name, string pwd)
+        {
+            return _ownerService.GetAll().FirstOrDefault(o => o.Name == name && BCrypt.Net.BCrypt.Verify(pwd, o.Password));
+        }
+
+        public bool ValidateId(ClaimsPrincipal user, int id)
         {
             var claim = user.FindFirst(ClaimTypes.NameIdentifier);
             if (claim == null)
             {
                 return false;
             }
-            return int.Parse(claim.Value) == userId;
+            return int.Parse(claim.Value) == id;
         }
 
-        public int GetUserIdFromToken(ClaimsPrincipal user)
+        public int GetIdFromToken(ClaimsPrincipal user)
         {
             var claim = user.FindFirst(ClaimTypes.NameIdentifier);
             if (claim == null)
@@ -66,9 +92,9 @@ namespace Services.Services
             return int.Parse(claim.Value);
         }
 
-        public bool CheckIsAdmin(ClaimsPrincipal user)
+        public bool CheckIsOwner(ClaimsPrincipal user)
         {
-            return user.FindFirst(ClaimTypes.Role).Value == "admin";
+            return user.FindFirst(ClaimTypes.Role).Value == "owner";
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿
 
-create database people
+create database people2
 go
-use people
+use people2
 create table people(
 	[Ρerson_Id] [int] IDENTITY (1,1) PRIMARY KEY NOT NULL,
 	[Рersonal_Νame] [nvarchar](50) NULL,
@@ -12,23 +12,35 @@ create table people(
 	[Mother_Id] [int] NULL,
 	[Spouѕe_Id] [int] NULL
 )
+-- זוג ראשון: משה ורבקה כהן
+INSERT INTO people (Рersonal_Νame, Family_Name, Gender, Fathеr_Id, Mother_Id, Spouѕe_Id)
+VALUES 
+('משה', 'כהן', 1, 0, 0, 2),     -- ID 1
+('רבקה', 'כהן', 0, 0, 0, 1);    -- ID 2
 
-INSERT INTO people ([Рersonal_Νame], [Family_Name], [Gender], [Fathеr_Id], [Mother_Id], [Spouѕe_Id])  
-VALUES  
-('יוסף', 'כהן', 1, NULL, NULL, 2),  
-('שרה', 'כהן', 0, NULL, NULL, 1),  
+-- זוג שני: יוסף ולאה לוי
+INSERT INTO people (Рersonal_Νame, Family_Name, Gender, Fathеr_Id, Mother_Id, Spouѕe_Id)
+VALUES 
+('יוסף', 'לוי', 1, 0, 0, 4),    -- ID 3
+('לאה', 'לוי', 0, 0, 0, 3);     -- ID 4
 
-('דוד', 'כהן', 1, 1, 2, 5),  
-('מרים', 'כהן', 0, 1, 2, 6),  
+-- ילד של משה ורבקה (כהן)
+INSERT INTO people (Рersonal_Νame, Family_Name, Gender, Fathеr_Id, Mother_Id, Spouѕe_Id)
+VALUES 
+('דוד', 'כהן', 1, 1, 2, 6);           -- ID 5
 
-('רוני', 'כהן', 1, 3, 5, NULL),  
-('נועה', 'כהן', 0, 3, 5, NULL),  
-('דביר', 'לוי', 1, 4, 6, NULL),  
-('תמר', 'לוי', 0, 4, 6, NULL);
+-- ילדה של יוסף ולאה (לוי)
+INSERT INTO people (Рersonal_Νame, Family_Name, Gender, Fathеr_Id, Mother_Id, Spouѕe_Id)
+VALUES 
+('מרים', 'לוי', 0, 3, 4, 5);          -- ID 6
+
+-- ילד נוסף של יוסף ולאה
+INSERT INTO people (Рersonal_Νame, Family_Name, Gender, Fathеr_Id, Mother_Id, Spouѕe_Id)
+VALUES 
+('אפרים', 'לוי', 1, 3, 4, 0);      -- ID 7
+
 select * from people
 
-Person_Id | Relative_Id | Connection_Type
-Connection_Type 
 create table tree(
 	Person_Id int ,
 	FOREIGN KEY (Person_Id) references people,
@@ -46,77 +58,87 @@ as
 begin
 	print 'start proc'
 	declare @id int, @fid int, @mid int, @gender bit, @sid int
-	declare @orders nvarchar(max) = ''
 	declare crs cursor scroll
 	for select Ρerson_Id, Fathеr_Id , mother_id, gender, Spouѕe_Id from people
 	open crs
 		fetch next from crs into @id, @fid, @mid, @gender, @sid
-		print @id 
 		while @@FETCH_STATUS = 0
 		begin
-			declare @sql nvarchar(max) = 'insert into tree values', @added bit = 0, @start nvarchar(10)=concat(' (',@id,',')
+			print @id 
+			declare @sql nvarchar(max) = '', @added bit = 0, @start nvarchar(30)=concat('insert into tree values (',@id,',')
 			--print @sql +' \n sql' 
-			--print @start +' \n start' 
 			----father
-			if @fid != null
-				set @sql = concat(@sql,@start,@fid,', ''אב''),')
-				print @sql
-				set @added = 1
-				print @sql
+			if @fid != 0
+				begin
+					print concat('father ', @fid)
+					set @sql = concat(@start,@fid,', ''אב'')')
+					set @added = 1
+					print @sql
+					exec (@sql)
+				end
 			--mother
-			if @mid != null
-				set @sql = concat(@sql ,@start ,@mid,', ''אם''),')
-				print @sql
-				set @added = 1
-				print @sql
+			if @mid != 0
+				begin
+					print concat('mother ', @mid)
+					set @sql = concat(@start ,@mid,', ''אם'')')
+					set @added = 1
+					print @sql
+					exec (@sql)
+				end
 			--siblings
 			if @added = 1--there is father or mother- means there may be siblings
-			begin
-				declare @sib table (
-					id int not null, gender bit not null
-				)
-				insert into @sib (id, gender) 
-					select Ρerson_Id, gender from people 
-						where (Fathеr_Id != null and Fathеr_Id = @fid) or (Mother_Id != null and Mother_Id = @mid)
-				declare @sibid int, @sibgender bit
-				declare sibCur cursor scroll
-				for select id, gender from @sib
-				open sibCur
-					fetch next from sibCur into @sibid, @sibgender
-					while @@FETCH_STATUS =0
-					begin
-						if @sibid != null and @sibgender != null
-						begin
-							if @sibgender = 1
-								set @sql = CONCAT(@sql , @start,@sibid ,', ''אח''),')
-							else
-								set @sql =CONCAT(@sql , @start,@sibid ,', ''אחות''),')
-							set @added = 1
-							print @sql
-						end
+				begin
+					print 'siblings'
+					declare @sib table (
+						id int not null, gender bit not null
+					)
+					insert into @sib (id, gender) 
+						select Ρerson_Id, gender from people 
+							where Ρerson_Id != @id and ((Fathеr_Id != 0 and Fathеr_Id = @fid) or (Mother_Id != 0 and Mother_Id = @mid))
+					select * from @sib
+					declare @sibid int, @sibgender bit
+					declare sibCur cursor scroll
+					for select id, gender from @sib
+					open sibCur
 						fetch next from sibCur into @sibid, @sibgender
-					end
-				close sibCur
-				deallocate sibCur
-			end--siblings
+						while @@FETCH_STATUS =0
+							begin
+								if @sibgender = 1
+									set @sql = CONCAT( @start,@sibid ,', ''אח'')')
+								else
+									set @sql =CONCAT(@start,@sibid ,', ''אחות'')')
+								set @added = 1
+								print @sql
+								exec (@sql)
+								fetch next from sibCur into @sibid, @sibgender
+							end
+					close sibCur
+					deallocate sibCur
+					delete from @sib
+				end--siblings
 			--spouse
-			if @sid != null
-			begin
-				if @gender = 1
-					set @sql = concat(@sql ,@start,@sid,', ''בת זוג''),')
-				else
-					set @sql = concat(@sql ,@start,@sid,', ''בן זוג''),')
-				set @added = 1
-				print @sql
-			end
-			--since it could be someone how lost his spouse i looking for children without checking married or not
+			if @sid != 0
+				begin
+					print concat('spouse ', @sid)
+					if @gender = 1
+						set @sql = concat(@start,@sid,', ''בת זוג'')')
+					else
+						set @sql = concat(@start,@sid,', ''בן זוג'')')
+					set @added = 1
+					print @sql
+					exec (@sql)
+				end
+			--since it could be Could be someone who is divorced or widowed I am looking for children without checking married or not
 			--children
+			print 'children'
 			declare @chil table (
 					id int not null, gender bit not null
 			)
 			insert into @chil (id, gender) 
 				select Ρerson_Id, gender from people 
-					where Fathеr_Id = @id or Mother_Id = @id
+					where (Fathеr_Id = @id and Fathеr_Id != 0) or (Mother_Id = @id and Mother_Id != 0)
+			select * from @chil
+
 			declare @childid int, @childgender bit
 			declare chilCur cursor scroll
 			for select id, gender from @chil
@@ -124,43 +146,79 @@ begin
 				fetch next from chilCur into @childid, @childgender
 				while @@FETCH_STATUS =0
 				begin
-					if @childid != null and @childgender != null
-					begin
-						if @childgender = 1
-							set @sql = concat(@sql , @start,@childid ,', ''בן''),')
-						else
-							set @sql = concat(@sql , @start,@childid ,', ''בת''),')
-						set @added = 1
-						print @sql
-					end
+					print 'child'
+					print @childid
+					if @childgender = 1
+						set @sql = concat( @start,@childid ,', ''בן'')')
+					else
+						set @sql = concat( @start,@childid ,', ''בת'')')
+					set @added = 1
+					print @sql
+					exec (@sql)
 					fetch next from chilCur into @childid, @childgender
 				end
 			close chilCur
 			deallocate chilCur
-
-			--
-			if @added = 1
-			begin
-				set @sql = left(@sql, len(@sql)-1)
-				print(@sql)
-				set @orders = concat(@orders, @sql)
-			end
+			delete from @chil
 			fetch next from crs into @id, @fid, @mid, @gender, @sid
 		end
 	close crs
 	deallocate crs
-
-	
 end
 
 exec ex1
+select * from tree
 
 
-declare @i nvarchar(max) = 'print ''high''' , @j nvarchar(max) = 'print ''low'''
-declare @ij nvarchar(max) = concat(@i,' ', @j)
-print @ij
-exec( @ij)
-print(len(@i))
-print left(@i, len(@i)-1)
+--ex2 complete spouses
+--add wrong couple
+INSERT INTO people (Рersonal_Νame, Family_Name, Gender, Fathеr_Id, Mother_Id, Spouѕe_Id)
+VALUES 
+('יניב', 'ברק', 1, 0, 0, 9),     -- ID 8
+('יעל', 'ברק', 0, 0, 0, 0);      -- ID 9
+delete from tree
+exec ex1
+select * from tree
 
+select * from tree
+where Connection_Type in ('בן זוג', 'בת זוג') 
 
+alter proc ex2
+as
+begin
+	declare @id int, @rid int, @type nvarchar(10)
+	declare crs2 cursor
+	for
+	select * from tree where Connection_Type in ('בן זוג', 'בת זוג') 
+	open crs2
+		fetch next from crs2 into @id, @rid,@type
+		while @@FETCH_STATUS = 0
+			begin
+				declare c cursor
+				for select Person_Id from tree where Relative_Id =@id and Connection_Type in ('בן זוג', 'בת זוג')
+				select Person_Id from tree where Relative_Id =@id and Connection_Type in ('בן זוג', 'בת זוג')
+				declare @found int = -1
+				open c
+					fetch next from c into @found
+					print @id
+					print @found
+					if @found = -1 
+						begin
+							print concat ('insert into tree values ', @rid, @id)
+							if @type = 'בן זוג'
+								insert into tree values (@rid, @id, 'בת זוג')
+							else
+								insert into tree values (@rid, @id, 'בן זוג')
+						end
+				close c
+				deallocate c
+
+				fetch next from crs2 into @id, @rid,@type
+			end
+	close crs2
+	deallocate crs2
+end
+
+exec ex2
+
+select * from tree where  Connection_Type in ('בן זוג', 'בת זוג') 

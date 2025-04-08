@@ -17,21 +17,3 @@ namespace Services.Interfaces
         bool CheckIsOwner(ClaimsPrincipal user);
     }
 }
-
-
-
-
-
-
-
-
-
-    //public interface ILoginService
-    //{
-    //    string GenerateTokenP(UserDto prov);
-    //    string GenerateTokenO(OwnerDto owner);
-    //    UserDto VerifyP(string name, string pwd);
-    //    OwnerDto VerifyO(string name, string pwd);
-    //    bool ValidateId(ClaimsPrincipal user, int id);
-    //    int GetIdFromToken(ClaimsPrincipal user);
-    //    bool CheckIsOwner(ClaimsPrincipal user);

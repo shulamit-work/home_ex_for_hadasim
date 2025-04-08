@@ -44,13 +44,7 @@ namespace WebApi.Controllers
             return Ok(products);
         }
 
-        // POST api/<ProductController>
-        //[HttpPost]
-        //public ProductDto Post([FromForm] ProductDto newP)
-        //{
-        //    ProductDto p = _productService.AddItem(newP);
-        //    return p;
-        //}
+       
 
     }
 }

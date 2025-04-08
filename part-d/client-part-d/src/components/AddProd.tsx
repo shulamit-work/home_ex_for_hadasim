@@ -1,12 +1,12 @@
 type addType = {
-    action: (e: React.FormEvent<HTMLFormElement>) => void// (name:string, pp1: number, minCount:number)=> void,
+    action: (e: React.FormEvent<HTMLFormElement>) => void
     num: number
 }
 
 export const AddProd = (props:addType)=>{
-    let idn = "nameInput" //+ props.num.toString()
-    let idp = "pricePerOneInput" //+ props.num.toString()
-    let idm = "minCountInput" //+ props.num.toString()
+    let idn = "nameInput" 
+    let idp = "pricePerOneInput" 
+    let idm = "minCountInput" 
     return (
         <div className="add-prod-form">
             <form className="add-prod-form" onSubmit={props.action}>
@@ -17,7 +17,7 @@ export const AddProd = (props:addType)=>{
                 <input type="Double" id={idp} />
                 <label htmlFor={idm}>minimum count</label>
                 <input type="number" id={idm} />
-                <button type="submit" /*onClick={props.action}*/>add product</button>
+                <button type="submit" >add product</button>
             </form>
         </div>
     )

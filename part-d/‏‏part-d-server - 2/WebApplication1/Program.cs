@@ -28,7 +28,7 @@ namespace WebApplication1
             builder.Services.AddRepository();
             builder.Services.AddDbContext<IContext, DB>();
 
-            //token
+            // JWT Authentication
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -42,12 +42,13 @@ namespace WebApplication1
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
                     };
 
-                    // how it r
+                   
                     options.Events = new JwtBearerEvents
                     {
                         OnMessageReceived = context =>
                         {
                             var path = context.HttpContext.Request.Path;
+                            
                             return Task.CompletedTask;
                         }
                     };
@@ -63,12 +64,14 @@ namespace WebApplication1
                     name: MyAllowSpecificOrigins,
                     policy =>
                     {
-                        policy.WithOrigins("http://localhost:3000") // הוסף את הדומיין שלך כאן
+                        policy.WithOrigins("http://localhost:3000") 
                               .AllowAnyMethod()
                               .AllowAnyHeader()
                               .AllowCredentials();
                     });
             });
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

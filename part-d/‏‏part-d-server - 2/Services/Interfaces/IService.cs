@@ -21,12 +21,13 @@ namespace Services.Interfaces
     public interface IProviderSerivce : IService<UserDto>
     {
         UserDto AddProvider(UserDto provider, List<ProductDto> products);
+        UserDto GetUserProfile(ClaimsPrincipal user, string host);
 
     }
     public interface IOrderSerivce : IService<OrderDto>
     {
         OrderDto AddOrder(OrderDto order, List<OrderProductDto> products);
-        OrderDto ConfirmOrder(int id, bool isOwner);//////////////////////////////////////////
+        OrderDto ConfirmOrder(int id, bool isOwner);
         List<OrderDto> GetOrdersByProvderId(int provderId);
     }
 

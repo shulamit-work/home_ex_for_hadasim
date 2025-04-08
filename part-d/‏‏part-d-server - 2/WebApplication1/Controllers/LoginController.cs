@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Dtos;
 using Services.Interfaces;
 
@@ -28,5 +29,11 @@ namespace WebApi.Controllers
             return Ok(token);
         }
 
+        [Authorize]
+        [HttpGet("/getRole")]
+        public bool GetRole()
+        {
+            return _loginService.CheckIsOwner(User);
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace WebApi.Controllers
             _serivce = serivce;
         }
 
-        [Authorize]///*(Roles = "provider")*/]
+        [Authorize(Roles = "provider")]
         [HttpGet("getByProviderId/{id}")]
         public List<MessageToProviderDto> Get(int id)
         {

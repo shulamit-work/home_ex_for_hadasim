@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -91,6 +92,25 @@ namespace Services.Services
         public List<UserDto> GetAll()
         {
             return _mapper.Map<List<UserDto>>(_repository.GetAll());
+        }
+
+        public UserDto GetUserProfile(ClaimsPrincipal user, string host)
+        {
+            var userIdFromToken = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdFromToken))
+            {
+                throw new UnauthorizedAccessException("Token is missing or invalid");
+            }
+
+            var userDto = Get(int.Parse(userIdFromToken));
+            if (userDto == null)
+            {
+                throw new KeyNotFoundException("User not found");
+            }
+
+         
+
+            return userDto;
         }
     }
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link, Form } from 'react-router-dom';
-import { login } from '../apis/loginApi';
+import { getRole, login } from '../apis/loginApi';
+import { fetchUserData } from '../apis/userApi';
 
 
 export const LoginPage = () => {
@@ -36,7 +37,13 @@ export const LoginPage = () => {
             if (response) {
                 console.log('saving token', response);
                 localStorage.setItem('authToken', response); 
-                if (response.role === "owner"){
+               
+                // this one line is your answer
+                const user = await fetchUserData();
+                console.log('User data:', user); 
+                
+                
+                if (user.isOwner){
                     navigate('/owner'); 
                 }
                 else {

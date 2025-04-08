@@ -106,15 +106,7 @@ export const RegisterPage = () => {
         
         setError(null);
         try {
-            // const dataToSend = {
-            //     provider: {
-            //         name: formData.name,
-            //         compamyName: formData.companyName,
-            //         phone: e.currentTarget.phone.value,
-            //         password: e.currentTarget.password.value,
-            //     },
-            //     products: formData.prods
-            // }
+            
             const formDataToSend = new FormData();
             Object.keys(formData).forEach(key =>{
                 const value = formData[key as keyof typeof formData];
